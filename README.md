@@ -50,7 +50,7 @@ user_sleep_logs
 -- sleep_at: timestamp
 -- wake_at: timestamp
 -- duration_second: int
-notes: added index on sleep_date for low cardinality column to avoid high index if we use sleep_at column
+notes: added index on sleep_date for low cardinality column to avoid high index if we use sleep_at column. this is needed if the data is getting bigger and we want to fetch data based on time
 
 user_follows
 -- -- created_at: timestamp
