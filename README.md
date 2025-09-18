@@ -20,14 +20,26 @@ rails db:migrate
 rails db:seed
 ```
 
+## Run Application
+
+```
+rails s
+```
+
+## Run Test
+
+```
+bundle exec rspec
+```
+
 ## Code Structure
 
 ```
 -- controllers -> to receive HTTP request
 |
----- services -> core business logic
+---- services  -> core business logic
 |
-------- models
+------- models -> interacting with database
 
 This allows reusability of service
 ```
@@ -58,9 +70,10 @@ user_follows
 -- created_at: timestamp
 -- updated_at: timestamp
 -- id: int
--- from_user_id: int         // unique
--- to_user_id: int           // unique
+-- from_user_id: int
+-- to_user_id: int
 ```
+notes: (from_user_id, to_user_id) unique
 
 ## APIs
 
@@ -69,15 +82,17 @@ Authorization: for simplicity, I use "Authorization" header key and the value is
 - header_value: {user_guid}
 
 POST /sleep/start
-- this api will record user sleep log, user cannot call /sleep api if the latest sleep log wake_at data is null
+- this api will record user sleep log
+- this api will return error if user cannot call /sleep/start api if the latest sleep log wake_at data is null. user need to call /sleep/finish first
 - body params: none
 
 POST /sleep/finish
-- this api will get the latest sleep log and update the wake_at data
+- this api will complete the latest user sleep log
+- this api will return error if the latest user sleep log wake_at data is not null. user need to call /sleep/start first
 - body params: none
 
 GET /sleep_logs/me
-- return user sleep log order by id desc (this should be the same with order by created_at desc)
+- return user sleep log ordered by id desc (this should be the same with order by created_at desc)
 - query params: limit, page
 
 GET /sleep_logs/friends
