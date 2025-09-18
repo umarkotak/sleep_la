@@ -16,6 +16,8 @@ cp .sample.env .env
 rails db:create
 
 rails db:migrate
+
+rails db:seed
 ```
 
 ## Code Structure
