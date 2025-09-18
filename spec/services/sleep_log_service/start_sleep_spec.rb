@@ -9,11 +9,11 @@ RSpec.describe SleepLogService::StartSleep do
     context "when user is nil" do
       let(:user) { nil }
 
-      it "raises MISSING_USER and does not create any user sleep log" do
+      it "raises UNAUTHORIZED and does not create any user sleep log" do
         expect do
           described_class.new(user).call
         end
-          .to raise_error(ConstErr::MISSING_USER)
+          .to raise_error(ConstErr::UNAUTHORIZED)
         .and not_change(UserSleepLog, :count)
       end
     end
