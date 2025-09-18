@@ -5,4 +5,10 @@ class ApplicationController < ActionController::API
     formatted_data = { data: data, error: error }
     render(status: status, json: formatted_data)
   end
+
+  def authenticate_user
+    auth_service = AuthService::Authenticate.new(request.headers["Authorization"].to_s)
+    auth_service.call
+    @user = auth_service.result
+  end
 end
