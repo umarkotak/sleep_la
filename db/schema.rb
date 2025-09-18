@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_18_075253) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_18_080135) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "user_follows", force: :cascade do |t|
+    t.bigint "from_user_id", null: false
+    t.bigint "to_user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["from_user_id", "to_user_id"], name: "index_user_follows_on_from_user_id_and_to_user_id", unique: true
+    t.index ["from_user_id"], name: "index_user_follows_on_from_user_id"
+    t.index ["to_user_id"], name: "index_user_follows_on_to_user_id"
+  end
 
   create_table "user_sleep_logs", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -34,5 +44,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_18_075253) do
     t.index ["guid"], name: "index_users_on_guid", unique: true
   end
 
+  add_foreign_key "user_follows", "users", column: "from_user_id"
+  add_foreign_key "user_follows", "users", column: "to_user_id"
   add_foreign_key "user_sleep_logs", "users"
 end

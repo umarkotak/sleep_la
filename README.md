@@ -53,7 +53,7 @@ user_sleep_logs
 notes: added index on sleep_date for low cardinality column to avoid high index if we use sleep_at column. this is needed if the data is getting bigger and we want to fetch data based on time
 
 user_follows
--- -- created_at: timestamp
+-- created_at: timestamp
 -- updated_at: timestamp
 -- id: int
 -- from_user_id: int         // unique
