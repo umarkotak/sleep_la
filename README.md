@@ -20,6 +20,7 @@ rails db:migrate
 
 ## Code Structure
 
+```
 -- controllers -> to receive HTTP request
 |
 ---- services -> core business logic
@@ -27,9 +28,11 @@ rails db:migrate
 ------- models
 
 This allows reusability of service
+```
 
 ## Tables
 
+```
 users
 -- created_at: timestamp
 -- updated_at: timestamp
@@ -55,12 +58,13 @@ user_follows
 -- id: int
 -- from_user_id: int         // unique
 -- to_user_id: int           // unique
+```
 
 ## APIs
 
 Authorization: for simplicity, I use "Authorization" header key and the value is the "user guid". This can be adjusted later on if not acceptable
-header_key: Authorization
-header_value: {user_guid}
+- header_key: Authorization
+- header_value: {user_guid}
 
 POST /sleep/start
 - this api will record user sleep log, user cannot call /sleep api if the latest sleep log wake_at data is null
