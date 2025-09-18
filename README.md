@@ -1,4 +1,4 @@
-# Sleep La
+# Good Night - Sleep La
 
 Your sleep tracker
 
