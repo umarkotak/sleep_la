@@ -2,6 +2,22 @@
 
 Your sleep tracker
 
+## Installation
+
+```
+bundle config path 'vendor/bundle' --local
+
+bundle install
+
+cp .sample.env .env
+
+// update the .env file according to your environment
+
+rails db:create
+
+rails db:migrate
+```
+
 ## Code Structure
 
 -- controllers -> to receive HTTP request
