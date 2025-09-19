@@ -13,6 +13,8 @@ class ApplicationController < ActionController::API
       status = 401
     when ConstErr::MUST_WAKE_FIRST
       status = 400
+    when ActiveRecord::RecordNotFound
+      status = 404
     end
 
     render_response(status: status, error: error_message)

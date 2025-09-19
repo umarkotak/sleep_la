@@ -1,5 +1,5 @@
 run:
 	rails s
 
-test:
+rspec:
 	bundle exec rspec

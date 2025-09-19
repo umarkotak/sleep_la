@@ -5,6 +5,7 @@ class User < ApplicationRecord
   validates :guid, presence: true
 
   has_many :user_sleep_logs
+  has_many :user_follows, foreign_key: :from_user_id, class_name: "UserFollow"
 
   private
 

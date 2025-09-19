@@ -5,4 +5,6 @@ class ConstErr
   MUST_WAKE_FIRST = "must wake first".freeze
   MUST_SLEEP_FIRST = "must sleep first".freeze
   INVALID_ORDERING = "invalid ordering".freeze
+  MISSING_USER_GUID_TO_FOLLOW = "missing user guid to follow".freeze
+  CANNOT_FOLLOW_SELF = "cannot follow self".freeze
 end
