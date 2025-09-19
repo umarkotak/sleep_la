@@ -7,5 +7,9 @@ class UsersController < ApplicationController
   end
 
   def unfollow
+    authenticate_user
+    service = UserService::Unfollow.new(@user, params)
+    service.call
+    render_response(data: service.result)
   end
 end

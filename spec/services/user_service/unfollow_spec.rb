@@ -1,11 +1,11 @@
-# spec/services/user_service/follow_spec.rb
+# spec/services/user_service/unfollow_spec.rb
 require 'rails_helper'
 
-RSpec.describe UserService::Follow do
+RSpec.describe UserService::Unfollow do
   describe '#call' do
     let(:current_user) { create(:user) }
-    let(:target_user) { create(:user) }
-    let(:params) { ActionController::Parameters.new(user_guid: target_user.guid) }
+    let(:target_user)  { create(:user) }
+    let(:params)       { ActionController::Parameters.new(user_guid: target_user.guid) }
 
     context 'when user is not signed in' do
       let(:current_user) { nil }
@@ -21,11 +21,11 @@ RSpec.describe UserService::Follow do
     context 'when user_guid is missing' do
       let(:params) { ActionController::Parameters.new({}) }
 
-      it 'raises MISSING_USER_GUID_TO_FOLLOW' do
+      it 'raises MISSING_USER_GUID_TO_UNFOLLOW' do
         expect do
           described_class.new(current_user, params).call
         end
-          .to raise_error(ConstErr::MISSING_USER_GUID_TO_FOLLOW)
+          .to raise_error(ConstErr::MISSING_USER_GUID_TO_UNFOLLOW)
       end
     end
 
@@ -40,40 +40,38 @@ RSpec.describe UserService::Follow do
       end
     end
 
-    context 'when attempting to follow self' do
+    context 'when attempting to unfollow self' do
       let(:target_user) { current_user }
 
-      it 'raises CANNOT_FOLLOW_SELF' do
+      it 'raises CANNOT_UNFOLLOW_SELF' do
         expect do
           described_class.new(current_user, params).call
         end
-          .to raise_error(ConstErr::CANNOT_FOLLOW_SELF)
+          .to raise_error(ConstErr::CANNOT_UNFOLLOW_SELF)
       end
     end
 
-    context 'when following a new user' do
-      it 'creates a UserFollow' do
+    context 'when a follow exists' do
+      it 'deletes the follow' do
+        UserService::Follow.new(current_user, params).call
+
         expect do
           described_class.new(current_user, params).call
         end
-          .to change(UserFollow, :count).by(1)
+          .to change(UserFollow, :count).by(-1)
 
-        follow = UserFollow.last
-        expect(follow.from_user_id).to eq(current_user.id)
-        expect(follow.to_user_id).to eq(target_user.id)
+        expect(
+          UserFollow.find_by(from_user_id: current_user.id, to_user_id: target_user.id)
+        ).to be_nil
       end
     end
 
-    context 'when already following the user (idempotent)' do
-      it 'does not create a duplicate record' do
-        described_class.new(current_user, params).call
-
+    context 'when a follow does not exist' do
+      it 'does not change count' do
         expect do
           described_class.new(current_user, params).call
-        end.not_to change(UserFollow, :count)
-
-        existing = UserFollow.find_by(from_user_id: current_user.id, to_user_id: target_user.id)
-        expect(existing).to be_present
+        end
+          .not_to change(UserFollow, :count)
       end
     end
   end
