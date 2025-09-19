@@ -2,6 +2,8 @@
 
 Your sleep tracker
 
+### Api notes can be read on README_API.md
+
 ## Pre Requisites
 
 ```
@@ -90,33 +92,15 @@ user_follows
 notes: (from_user_id, to_user_id) unique
 ```
 
-## APIs
-
-**Authorization**: for simplicity, I use "Authorization" header key and the value is the "user guid". This can be adjusted later on if not acceptable
-- header_key: Authorization
-- header_value: {user_guid}
-
-POST /sleep/start
-- this api will record user sleep log
-- this api will return error if user cannot call /sleep/start api if the latest sleep log wake_at data is null. user need to call /sleep/finish first
-- body params: none
-
-POST /sleep/finish
-- this api will complete the latest user sleep log
-- this api will return error if the latest user sleep log wake_at data is not null. user need to call /sleep/start first
-- body params: none
-
-GET /sleep_logs/me
-- return user sleep log ordered by id desc (this should be the same with order by created_at desc)
-- query params: limit, page
-
-GET /sleep_logs/friends
-- return the sleep log of all friend the current user follows
-
-POST /user/{user_guid}/follow
-- this api will insert to user_follows_table
-
-POST /user/{user_guid}/unfollow
-- this api will delete from user_follows_table
-
 ## Future Improvement For Handling High Load
+
+Here are few scaling up scenarios that I propose:
+
+```
+1. When a high traffic of users submitting clock in (start sleep) at the same time, eg: at 19:00 o clock.
+1.1 We can horizontally scale the Good Night App (eg: 2-3 instance) and put a load balancer on top of it. This allows traffic to be distributed among the instances hence write process will be faster.
+1.2 If we don't care about the realtime result, since for example after the user clock in they will immediately sleep. We can implement queuing for submitting the clock in data. This is to avoid high concurent write to the database.
+
+2. When a high traffic of users checking their friends sleep logs, eg: at 07:00 o clock.
+2.1 We can make the database to be master-slave relationship. This allows read operation to be focused on the slave replica so that it won't takes the resource of the master.
+```
