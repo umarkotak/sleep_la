@@ -21,5 +21,9 @@ class SleepLogsController < ApplicationController
   end
 
   def get_friends_sleep_logs
+    authenticate_user
+    service = SleepLogService::GetFriendsSleepLogs.new(@user, params)
+    service.call
+    render_response(data: service.result)
   end
 end

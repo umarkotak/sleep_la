@@ -1,6 +1,7 @@
 module SleepLogService
   class GetMySleepLogs < BaseService
     DEFAULT_LIMIT = 20
+    ALLOWED_ORDERS = [ "id desc", "id asc" ].freeze
 
     def initialize(user, params = {})
       @user = user
@@ -19,8 +20,7 @@ module SleepLogService
       raise ConstErr::UNAUTHORIZED if @user.blank?
 
       if @params[:order].presence
-        allowed_orders = [ "id desc", "id asc" ]
-        raise ConstErr::INVALID_ORDERING if !allowed_orders.include?(@params[:order].to_s)
+        raise ConstErr::INVALID_ORDERING if ALLOWED_ORDERS.include?(@params[:order].to_s)
       end
     end
 

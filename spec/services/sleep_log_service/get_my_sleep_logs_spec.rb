@@ -62,7 +62,7 @@ RSpec.describe SleepLogService::GetMySleepLogs do
         service.call
         result = service.result
 
-        expect(result[:user_sleep_logs].length).to eq(user_sleep_logs.length)
+        expect(result[:user_sleep_logs].size).to eq(user_sleep_logs.size)
 
         # match sleep logs order based on id desc
         returned_ids = result[:user_sleep_logs].map { |h| h["id"] }
@@ -98,7 +98,7 @@ RSpec.describe SleepLogService::GetMySleepLogs do
         service.call
         result = service.result
 
-        expect(result[:user_sleep_logs].length).to eq(1)
+        expect(result[:user_sleep_logs].size).to eq(1)
 
         # match sleep logs order based on id desc
         returned_ids = result[:user_sleep_logs].map { |h| h["id"] }
