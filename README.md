@@ -2,6 +2,21 @@
 
 Your sleep tracker
 
+## Pre Requisites
+
+```
+// rbenv for ruby versioning
+// you can follow this instruction to install rbenv
+https://github.com/rbenv/rbenv?tab=readme-ov-file#installation
+
+// ruby 3.4.4
+// you can use rbenv to install ruby 3.4.4
+rbenv install 3.4.4
+
+// enable ruby 3.4.4
+rbenv local 3.4.4
+```
+
 ## Installation
 
 ```
@@ -72,12 +87,12 @@ user_follows
 -- id: int
 -- from_user_id: int
 -- to_user_id: int
-```
 notes: (from_user_id, to_user_id) unique
+```
 
 ## APIs
 
-Authorization: for simplicity, I use "Authorization" header key and the value is the "user guid". This can be adjusted later on if not acceptable
+**Authorization**: for simplicity, I use "Authorization" header key and the value is the "user guid". This can be adjusted later on if not acceptable
 - header_key: Authorization
 - header_value: {user_guid}
 
@@ -103,3 +118,5 @@ POST /user/{user_guid}/follow
 
 POST /user/{user_guid}/unfollow
 - this api will delete from user_follows_table
+
+## Future Improvement For Handling High Load
