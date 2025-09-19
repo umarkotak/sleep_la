@@ -38,7 +38,7 @@ RSpec.describe SleepLogService::StartSleep do
           described_class.new(user).call
         end.to change(UserSleepLog, :count).by(1)
 
-        sleep_log = UserSleepLog.order(:id).last
+        sleep_log = UserSleepLog.order(id: :desc).last
         expect(sleep_log.user).to eq(user)
         expect(sleep_log.sleep_at.to_i).to eq(frozen_time.to_i)
         expect(sleep_log.sleep_date).to eq(frozen_time.to_date)
