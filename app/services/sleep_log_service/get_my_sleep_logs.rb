@@ -20,7 +20,7 @@ module SleepLogService
       raise ConstErr::UNAUTHORIZED if @user.blank?
 
       if @params[:order].presence
-        raise ConstErr::INVALID_ORDERING if ALLOWED_ORDERS.include?(@params[:order].to_s)
+        raise ConstErr::INVALID_ORDERING if !ALLOWED_ORDERS.include?(@params[:order].to_s)
       end
     end
 
