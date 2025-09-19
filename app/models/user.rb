@@ -4,6 +4,8 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :guid, presence: true
 
+  has_many :user_sleep_logs
+
   private
 
   def assign_guid

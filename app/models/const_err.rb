@@ -4,4 +4,5 @@ class ConstErr
   MISSING_USER = "missing user".freeze
   MUST_WAKE_FIRST = "must wake first".freeze
   MUST_SLEEP_FIRST = "must sleep first".freeze
+  INVALID_ORDERING = "invalid ordering".freeze
 end
