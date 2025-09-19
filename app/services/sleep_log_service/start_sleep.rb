@@ -15,7 +15,7 @@ module SleepLogService
     def validate
       raise ConstErr::UNAUTHORIZED if @user.blank?
 
-      raise ConstErr::MUST_WAKE_FIRST if UserSleepLog.find_by(user: @user, wake_at: nil).present?
+      raise ConstErr::MUST_WAKE_FIRST if UserSleepLog.where(user: @user, wake_at: nil).order(id: :desc).first.present?
     end
 
     def execute_logic
