@@ -19,7 +19,13 @@ module SleepLogService
     end
 
     def execute_logic
-      user_sleep_log = UserSleepLog.create!(user: @user, sleep_at: Time.current)
+      now = Time.current
+
+      user_sleep_log = UserSleepLog.create!(
+        user: @user,
+        sleep_at: now,
+        sleep_date: now.to_date
+      )
 
       @result = {
         id: user_sleep_log.id

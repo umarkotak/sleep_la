@@ -22,6 +22,7 @@ module SleepLogService
       raise ConstErr::MUST_SLEEP_FIRST if user_sleep_log.blank?
 
       now = Time.current
+
       user_sleep_log.update!(
         wake_at: now,
         duration_second: now.to_i - user_sleep_log.sleep_at.to_i

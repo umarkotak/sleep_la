@@ -41,6 +41,7 @@ RSpec.describe SleepLogService::StartSleep do
         sleep_log = UserSleepLog.order(:id).last
         expect(sleep_log.user).to eq(user)
         expect(sleep_log.sleep_at.to_i).to eq(frozen_time.to_i)
+        expect(sleep_log.sleep_date).to eq(frozen_time.to_date)
         expect(sleep_log.wake_at).to be_nil
       end
     end
