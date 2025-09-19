@@ -7,6 +7,10 @@ class SleepLogsController < ApplicationController
   end
 
   def finish_sleep
+    authenticate_user
+    service = SleepLogService::FinishSleep.new(@user)
+    service.call
+    render_response(data: service.result)
   end
 
   def get_my_sleep_logs
