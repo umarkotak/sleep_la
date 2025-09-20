@@ -36,7 +36,7 @@ module AuthService
 
       @result = {
         token: "Bearer #{JWT.encode(payload, SECRET, ALG)}"
-      }
+    }.as_json
     end
   end
 end

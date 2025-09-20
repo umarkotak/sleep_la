@@ -3,9 +3,13 @@ require "rails_helper"
 RSpec.describe SleepLogsController, type: :request do
   let(:user) { create(:user) }
 
-  let(:headers) {{
-    Authorization: user.guid,
-  }}
+  let(:auth_token) do
+    AuthService::Login.new(ActionController::Parameters.new(user_guid: user.guid)).call
+  end
+
+  let(:headers) { {
+    Authorization: auth_token["token"]
+  } }
 
   context "when header authorization is empty" do
     let(:user) { nil }
