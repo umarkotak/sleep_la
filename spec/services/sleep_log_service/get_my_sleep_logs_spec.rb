@@ -91,7 +91,7 @@ RSpec.describe SleepLogService::GetMySleepLogs do
     end
 
     context "with pagination and order" do
-      it "uses given default params for fetching user sleep logs" do
+      it "uses given custom params for fetching user sleep logs" do
         service = described_class.new(user, ActionController::Parameters.new({
           limit: 1, page: 2, order: "id asc"
         }))
