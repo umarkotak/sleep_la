@@ -26,4 +26,5 @@ group :development, :test do
   gem "faker"
   gem "ruby-lsp"
   gem "ruby-lsp-rspec"
+  gem "simplecov", require: false
 end

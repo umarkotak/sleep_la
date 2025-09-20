@@ -28,6 +28,15 @@ RSpec.describe "GET /goodnight/api/v1/sleep_logs/friends", type: :request do
     end
   end
 
+  context "when sending invalid ordering params" do
+    it "returns 400 invalid ordering" do
+      get "/goodnight/api/v1/sleep_logs/friends", params: { order: "name asc" }, headers: headers
+
+      expect(response).to have_http_status(400)
+      expect(json["error"]).to eq("invalid ordering")
+    end
+  end
+
   context "default behavior (last 7 days, ordered by duration desc)" do
     before do
       now = Time.current
