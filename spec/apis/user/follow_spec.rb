@@ -12,7 +12,6 @@ RSpec.describe "POST /goodnight/api/v1/user/:user_guid/follow", type: :request d
   } }
 
   let(:target_user) { create(:user) }
-  let(:params) { ActionController::Parameters.new(user_guid: target_user.guid) }
 
   context "when header authorization is empty" do
     it 'return 401 UNAUTHORIZED' do
@@ -48,6 +47,7 @@ RSpec.describe "POST /goodnight/api/v1/user/:user_guid/follow", type: :request d
         post "/goodnight/api/v1/user/#{target_user.guid}/follow", headers: headers
       end
         .to change(UserFollow, :count).by(1)
+      expect(response).to have_http_status(200)
 
       follow = UserFollow.last
       expect(follow.from_user_id).to eq(current_user.id)
@@ -58,10 +58,12 @@ RSpec.describe "POST /goodnight/api/v1/user/:user_guid/follow", type: :request d
   context 'when already following the target user then follow it again' do
     it 'returns 200 and does not create a duplicate record' do
       post "/goodnight/api/v1/user/#{target_user.guid}/follow", headers: headers
+      expect(response).to have_http_status(200)
 
       expect do
         post "/goodnight/api/v1/user/#{target_user.guid}/follow", headers: headers
       end.not_to change(UserFollow, :count)
+      expect(response).to have_http_status(200)
 
       existing = UserFollow.find_by(from_user_id: current_user.id, to_user_id: target_user.id)
       expect(existing).to be_present

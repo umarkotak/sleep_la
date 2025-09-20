@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe UserService::Unfollow do
   describe '#call' do
     let(:current_user) { create(:user) }
-    let(:target_user)  { create(:user) }
-    let(:params)       { ActionController::Parameters.new(user_guid: target_user.guid) }
+    let(:target_user) { create(:user) }
+    let(:params) { ActionController::Parameters.new(user_guid: target_user.guid) }
 
     context 'when user is not signed in' do
       let(:current_user) { nil }
