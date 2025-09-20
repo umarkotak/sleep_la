@@ -17,10 +17,10 @@ module SleepLogService
     private
 
     def validate
-      raise ConstErr::UNAUTHORIZED if @user.blank?
+      raise Errors::Unauthorized if @user.blank?
 
       if @params[:order].presence && !ALLOWED_ORDERS.include?(@params[:order].to_s)
-        raise ConstErr::INVALID_ORDERING
+        raise Errors::InvalidOrdering
       end
     end
 

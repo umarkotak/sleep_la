@@ -14,15 +14,15 @@ module UserService
     private
 
     def validate
-      raise ConstErr::UNAUTHORIZED if @user.blank?
+      raise Errors::Unauthorized if @user.blank?
 
-      raise ConstErr::MISSING_USER_GUID_TO_UNFOLLOW if @params[:user_guid].blank?
+      raise Errors::MissingUserGuidToUnfollow if @params[:user_guid].blank?
     end
 
     def execute_logic
       target_user = User.find_by!(guid: @params[:user_guid])
 
-      raise ConstErr::CANNOT_UNFOLLOW_SELF if target_user.id == @user.id
+      raise Errors::CannotUnfollowSelf if target_user.id == @user.id
 
       UserFollow.where(
         from_user_id: @user.id,
