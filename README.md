@@ -38,15 +38,19 @@ rails db:seed
 ```
 
 ## Run Application
-
 ```
 rails s
 ```
 
 ## Run Test
-
 ```
 bundle exec rspec
+```
+
+## See Code Coverage
+```
+// this file is generated after running rspec
+open coverage/index.html
 ```
 
 ## Code Structure
