@@ -40,7 +40,7 @@ RSpec.describe "POST /goodnight/api/v1/sleep/finish", type: :request do
 
       sleep_log = UserSleepLog.order(id: :desc).last
       expect(sleep_log.user).to eq(user)
-      expect(sleep_log.wake_at).to_not be_nil
+      expect(sleep_log.wake_at).not_to be_nil
     end
   end
 end

@@ -1,4 +1,3 @@
-# spec/services/user_service/follow_spec.rb
 require 'rails_helper'
 
 RSpec.describe UserService::Follow do
@@ -64,7 +63,7 @@ RSpec.describe UserService::Follow do
       end
     end
 
-    context 'when already following the user (idempotent)' do
+    context 'when already following the target user then follow it again' do
       it 'does not create a duplicate record' do
         described_class.new(current_user, params).call
 

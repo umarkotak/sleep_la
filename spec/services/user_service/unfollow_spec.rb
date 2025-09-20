@@ -1,4 +1,3 @@
-# spec/services/user_service/unfollow_spec.rb
 require 'rails_helper'
 
 RSpec.describe UserService::Unfollow do

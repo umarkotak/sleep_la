@@ -1,4 +1,3 @@
-# spec/services/sleep_log_service/get_friends_sleep_logs_spec.rb
 require "rails_helper"
 
 RSpec.describe SleepLogService::GetFriendsSleepLogs do
