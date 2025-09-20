@@ -5,19 +5,9 @@ class ApplicationController < ActionController::API
   private
 
   def handle_error(e)
-    error_message = e&.message.to_s
-    status = 500
-
-    case error_message
-    when ConstErr::UNAUTHORIZED
-      status = 401
-    when ConstErr::MUST_WAKE_FIRST
-      status = 400
-    when ActiveRecord::RecordNotFound
-      status = 404
-    end
-
-    render_response(status: status, error: error_message)
+    status = e.http_status if e.respond_to?(:http_status)
+    status ||= 500
+    render_response(status: status, error: e.message)
   end
 
   def render_response(status: 200, data: {}, error: "")
