@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "POST /goodnight/api/v1/sleep/start", type: :request do
+RSpec.describe "POST /goodnight/api/v1/sleep/finish", type: :request do
   let(:user) { create(:user) }
 
   let(:auth_token) do
@@ -15,37 +15,32 @@ RSpec.describe "POST /goodnight/api/v1/sleep/start", type: :request do
     let(:user) { nil }
 
     it "returns 401 unauthorized" do
-      post "/goodnight/api/v1/sleep/start", headers: {}
+      post "/goodnight/api/v1/sleep/finish", headers: {}
 
       expect(response).to have_http_status(401)
     end
   end
 
-  context "when the user call sleep for the second time" do
-    it "returns 400 must wake first" do
-      post "/goodnight/api/v1/sleep/start", headers: headers
-
-      post "/goodnight/api/v1/sleep/start", headers: headers
+  context "when the user call finish when there is no sleep for the second time" do
+    it "returns 400 must sleep first" do
+      post "/goodnight/api/v1/sleep/finish", headers: headers
 
       expect(response).to have_http_status(400)
-      expect(json["error"]).to eq("must wake first")
+      expect(json["error"]).to eq("must sleep first")
     end
   end
 
   context "when everything is valid" do
-    it "it returns 200 and succeed clock in for sleep" do
-      frozen_time = Time.current
-      allow(Time).to receive(:current).and_return(frozen_time)
-
+    it "returns 200 and clock out for wake up" do
       post "/goodnight/api/v1/sleep/start", headers: headers
+
+      post "/goodnight/api/v1/sleep/finish", headers: headers
 
       expect(response).to have_http_status(200)
 
       sleep_log = UserSleepLog.order(id: :desc).last
       expect(sleep_log.user).to eq(user)
-      expect(sleep_log.sleep_at.to_i).to eq(frozen_time.to_i)
-      expect(sleep_log.sleep_date).to eq(frozen_time.to_date)
-      expect(sleep_log.wake_at).to be_nil
+      expect(sleep_log.wake_at).to_not be_nil
     end
   end
 end

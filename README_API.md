@@ -66,7 +66,7 @@ curl --location --request POST 'http://localhost:3000/goodnight/api/v1/sleep/sta
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnb29kLW5pZ2h0LXNsZWVwLWxhLWFwcCIsInN1YiI6ImU5ZTA2NDAyLTc1N2EtNDY0OS05ZjVjLTI5NjExODU3MzhhNiIsImlhdCI6MTc1ODMzNjQwMCwianRpIjoiNDAzYTExNTQtMTI3MS00NjQzLTg0ZTYtYTljZmMzZTEwYmU5In0.fSKZOWSeZ-R3myhqC_cqUpF7uiyYpVogRj4X7W4CKww'
 
 POST /goodnight/api/v1/sleep/finish
-curl --location --request POST 'http://localhost:3000/goodnight/api/v1/sleep/start' \
+curl --location --request POST 'http://localhost:3000/goodnight/api/v1/sleep/finish' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnb29kLW5pZ2h0LXNsZWVwLWxhLWFwcCIsInN1YiI6ImU5ZTA2NDAyLTc1N2EtNDY0OS05ZjVjLTI5NjExODU3MzhhNiIsImlhdCI6MTc1ODMzNjQwMCwianRpIjoiNDAzYTExNTQtMTI3MS00NjQzLTg0ZTYtYTljZmMzZTEwYmU5In0.fSKZOWSeZ-R3myhqC_cqUpF7uiyYpVogRj4X7W4CKww'
 
 GET /goodnight/api/v1/sleep_logs/me
