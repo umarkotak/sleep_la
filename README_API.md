@@ -2,11 +2,17 @@
 
 ## Authorization
 
-for simplicity of the test, I use "Authorization" header key and "user guid" as the header value for the authentication process. This can be adjusted later on, we can use JWT for the auth token.
+user need to get the auth token first by calling POST /goodnight/api/v1/auth/login with user guid.
 - header_key: Authorization
-- header_value: {user_guid}
+- header_value: Bearer {auth_token}
 
 # APIs description
+
+### Login
+- Path: POST /goodnight/api/v1/auth/login
+- Description: This API is used to get the authentication token.
+- Body Params: { "user_guid": "" }
+- Notes: For simplicity, i only use user guid for auth. ideally this should be something like email + password. since the docs didn't specify any auth mechanism, i went with the simplest one
 
 ### Clock In - Start sleeping
 - Path: POST /goodnight/api/v1/sleep/start
@@ -47,27 +53,35 @@ for simplicity of the test, I use "Authorization" header key and "user guid" as 
 # Sample CURLs
 
 ```
+POST /goodnight/api/v1/auth/login
+curl --location 'http://localhost:3000/goodnight/api/v1/auth/login' \
+--header 'Authorization: e9e06402-757a-4649-9f5c-2961185738a6' \
+--header 'Content-Type: application/json' \
+--data '{
+    "user_guid": "e9e06402-757a-4649-9f5c-2961185738a6"
+}'
+
 POST /goodnight/api/v1/sleep/start
 curl --location --request POST 'http://localhost:3000/goodnight/api/v1/sleep/start' \
---header 'Authorization: e9e06402-757a-4649-9f5c-2961185738a6'
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnb29kLW5pZ2h0LXNsZWVwLWxhLWFwcCIsInN1YiI6ImU5ZTA2NDAyLTc1N2EtNDY0OS05ZjVjLTI5NjExODU3MzhhNiIsImlhdCI6MTc1ODMzNjQwMCwianRpIjoiNDAzYTExNTQtMTI3MS00NjQzLTg0ZTYtYTljZmMzZTEwYmU5In0.fSKZOWSeZ-R3myhqC_cqUpF7uiyYpVogRj4X7W4CKww'
 
 POST /goodnight/api/v1/sleep/finish
 curl --location --request POST 'http://localhost:3000/goodnight/api/v1/sleep/start' \
---header 'Authorization: e9e06402-757a-4649-9f5c-2961185738a6'
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnb29kLW5pZ2h0LXNsZWVwLWxhLWFwcCIsInN1YiI6ImU5ZTA2NDAyLTc1N2EtNDY0OS05ZjVjLTI5NjExODU3MzhhNiIsImlhdCI6MTc1ODMzNjQwMCwianRpIjoiNDAzYTExNTQtMTI3MS00NjQzLTg0ZTYtYTljZmMzZTEwYmU5In0.fSKZOWSeZ-R3myhqC_cqUpF7uiyYpVogRj4X7W4CKww'
 
 GET /goodnight/api/v1/sleep_logs/me
 curl --location 'http://localhost:3000/goodnight/api/v1/sleep_logs/me?limit=20&page=1&order=id%20desc' \
---header 'Authorization: e9e06402-757a-4649-9f5c-2961185738a6'
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnb29kLW5pZ2h0LXNsZWVwLWxhLWFwcCIsInN1YiI6ImU5ZTA2NDAyLTc1N2EtNDY0OS05ZjVjLTI5NjExODU3MzhhNiIsImlhdCI6MTc1ODMzNjQwMCwianRpIjoiNDAzYTExNTQtMTI3MS00NjQzLTg0ZTYtYTljZmMzZTEwYmU5In0.fSKZOWSeZ-R3myhqC_cqUpF7uiyYpVogRj4X7W4CKww'
 
 GET /goodnight/api/v1/sleep_logs/friends
 curl --location 'http://localhost:3000/goodnight/api/v1/sleep_logs/friends?limit=20&page=1&min_sleep_date=&order=null' \
---header 'Authorization: e9e06402-757a-4649-9f5c-2961185738a6'
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnb29kLW5pZ2h0LXNsZWVwLWxhLWFwcCIsInN1YiI6ImU5ZTA2NDAyLTc1N2EtNDY0OS05ZjVjLTI5NjExODU3MzhhNiIsImlhdCI6MTc1ODMzNjQwMCwianRpIjoiNDAzYTExNTQtMTI3MS00NjQzLTg0ZTYtYTljZmMzZTEwYmU5In0.fSKZOWSeZ-R3myhqC_cqUpF7uiyYpVogRj4X7W4CKww'
 
 POST /goodnight/api/v1/user/{user_guid}/follow
 curl --location --request POST 'http://localhost:3000/goodnight/api/v1/user/0b5b8bb9-d38f-4771-9c86-fbff54d901d5/follow' \
---header 'Authorization: e9e06402-757a-4649-9f5c-2961185738a6'
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnb29kLW5pZ2h0LXNsZWVwLWxhLWFwcCIsInN1YiI6ImU5ZTA2NDAyLTc1N2EtNDY0OS05ZjVjLTI5NjExODU3MzhhNiIsImlhdCI6MTc1ODMzNjQwMCwianRpIjoiNDAzYTExNTQtMTI3MS00NjQzLTg0ZTYtYTljZmMzZTEwYmU5In0.fSKZOWSeZ-R3myhqC_cqUpF7uiyYpVogRj4X7W4CKww'
 
 POST /goodnight/api/v1/user/{user_guid}/unfollow
 curl --location --request POST 'http://localhost:3000/goodnight/api/v1/user/0b5b8bb9-d38f-4771-9c86-fbff54d901d5/unfollow' \
---header 'Authorization: e9e06402-757a-4649-9f5c-2961185738a6'
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnb29kLW5pZ2h0LXNsZWVwLWxhLWFwcCIsInN1YiI6ImU5ZTA2NDAyLTc1N2EtNDY0OS05ZjVjLTI5NjExODU3MzhhNiIsImlhdCI6MTc1ODMzNjQwMCwianRpIjoiNDAzYTExNTQtMTI3MS00NjQzLTg0ZTYtYTljZmMzZTEwYmU5In0.fSKZOWSeZ-R3myhqC_cqUpF7uiyYpVogRj4X7W4CKww'
 ```
