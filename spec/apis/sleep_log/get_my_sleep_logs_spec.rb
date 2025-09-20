@@ -44,7 +44,7 @@ RSpec.describe "GET /goodnight/api/v1/sleep_logs/me", type: :request do
     end
   end
 
-  context "when user is blank" do
+  context "when header authorization is empty" do
     it "return 401 unauthorized" do
       get "/goodnight/api/v1/sleep_logs/me", headers: {}
 
@@ -65,6 +65,7 @@ RSpec.describe "GET /goodnight/api/v1/sleep_logs/me", type: :request do
     it "returns 200 and uses the default default params for fetching user sleep logs" do
       get "/goodnight/api/v1/sleep_logs/me", headers: headers
 
+      expect(response).to have_http_status(200)
       expect(json["data"]["user_sleep_logs"].size).to eq(user_sleep_logs.size)
 
       # match sleep logs order based on id desc
@@ -97,6 +98,7 @@ RSpec.describe "GET /goodnight/api/v1/sleep_logs/me", type: :request do
     it "returns 200 and uses the given params for fetching user sleep logs" do
       get "/goodnight/api/v1/sleep_logs/me", params: { limit: 1, page: 2, order: "id asc" }, headers: headers
 
+      expect(response).to have_http_status(200)
       expect(json["data"]["user_sleep_logs"].size).to eq(1)
 
       # match sleep logs order based on id desc

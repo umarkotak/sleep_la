@@ -16,8 +16,8 @@ RSpec.describe SleepLogService::GetFriendsSleepLogs do
   end
 
   describe "#call" do
-    context "authorization" do
-      it "raises UNAUTHORIZED when user is blank" do
+    context "when user is blank" do
+      it "raises UNAUTHORIZED" do
         expect do
           described_class.new(nil, ActionController::Parameters.new({})).call
         end.to raise_error(Errors::Unauthorized)
