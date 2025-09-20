@@ -2,7 +2,7 @@ module AuthService
   class Login < BaseService
     SECRET = Rails.application.config.jwt_secret
     ALG = Rails.application.config.jwt_algorithm
-    ISSUER = "good-night-sleep-la-app"
+    ISSUER = Rails.application.config.jwt_issuer
 
     def initialize(params)
       # for simplicity, i only use guid for auth. ideally this should be something like email + password
