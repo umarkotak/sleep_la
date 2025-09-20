@@ -20,7 +20,9 @@ module UserService
     end
 
     def execute_logic
-      target_user = User.find_by!(guid: @params[:user_guid])
+      target_user = User.find_by(guid: @params[:user_guid])
+
+      raise Errors::UserNotFound if target_user.blank?
 
       raise Errors::CannotFollowSelf if target_user.id == @user.id
 

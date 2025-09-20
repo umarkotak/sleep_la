@@ -11,7 +11,7 @@ RSpec.describe SleepLogService::FinishSleep do
         expect do
           described_class.new(nil).call
         end
-          .to raise_error(ConstErr::UNAUTHORIZED)
+          .to raise_error(Errors::Unauthorized)
 
         user_sleep_log.reload
         expect(user_sleep_log.wake_at).to be_nil
@@ -30,7 +30,7 @@ RSpec.describe SleepLogService::FinishSleep do
         expect do
           described_class.new(user).call
         end
-          .to raise_error(ConstErr::MUST_SLEEP_FIRST)
+          .to raise_error(Errors::MustSleepFirst)
           .and not_change(UserSleepLog, :count)
       end
     end

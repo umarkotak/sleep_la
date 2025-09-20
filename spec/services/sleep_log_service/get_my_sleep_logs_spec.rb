@@ -41,7 +41,7 @@ RSpec.describe SleepLogService::GetMySleepLogs do
         expect do
           described_class.new(nil, ActionController::Parameters.new({})).call
         end
-          .to raise_error(ConstErr::UNAUTHORIZED)
+          .to raise_error(Errors::Unauthorized)
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe SleepLogService::GetMySleepLogs do
             order: "' OR 1 = 1"
           })).call
         end
-          .to raise_error(ConstErr::INVALID_ORDERING)
+          .to raise_error(Errors::InvalidOrdering)
       end
     end
 

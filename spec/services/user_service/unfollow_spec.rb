@@ -14,7 +14,7 @@ RSpec.describe UserService::Unfollow do
         expect do
           described_class.new(current_user, params).call
         end
-          .to raise_error(ConstErr::UNAUTHORIZED)
+          .to raise_error(Errors::Unauthorized)
       end
     end
 
@@ -25,7 +25,7 @@ RSpec.describe UserService::Unfollow do
         expect do
           described_class.new(current_user, params).call
         end
-          .to raise_error(ConstErr::MISSING_USER_GUID_TO_UNFOLLOW)
+          .to raise_error(Errors::MissingUserGuidToUnfollow)
       end
     end
 
@@ -36,7 +36,7 @@ RSpec.describe UserService::Unfollow do
         expect do
           described_class.new(current_user, params).call
         end
-          .to raise_error(ActiveRecord::RecordNotFound)
+          .to raise_error(Errors::UserNotFound)
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe UserService::Unfollow do
         expect do
           described_class.new(current_user, params).call
         end
-          .to raise_error(ConstErr::CANNOT_UNFOLLOW_SELF)
+          .to raise_error(Errors::CannotUnfollowSelf)
       end
     end
 

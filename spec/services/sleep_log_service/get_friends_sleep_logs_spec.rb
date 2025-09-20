@@ -20,7 +20,7 @@ RSpec.describe SleepLogService::GetFriendsSleepLogs do
       it "raises UNAUTHORIZED when user is blank" do
         expect do
           described_class.new(nil, ActionController::Parameters.new({})).call
-        end.to raise_error(ConstErr::UNAUTHORIZED)
+        end.to raise_error(Errors::Unauthorized)
       end
     end
 
