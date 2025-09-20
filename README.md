@@ -96,6 +96,14 @@ user_follows
 notes: (from_user_id, to_user_id) unique
 ```
 
+## Current strategies to handle high data volumes and concurrent requests
+
+```
+1. When sleep clock in process there is sleep_date column that is btree indexed. This column have low cardinality (less unique values) so the indexing is less big compared to use sleep_at as index which is an exact time.
+
+2. When user get their friends sleep log records for the last week, I filter the query based on the sleep_date index so that the records look up is fast.
+```
+
 ## Future Improvement For Handling High Load
 
 Here are few scaling up scenarios that I propose:
