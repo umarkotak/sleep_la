@@ -7,6 +7,10 @@ Your sleep tracker
 ## Pre Requisites
 
 ```
+// postgres database
+// for mac user you can use this command to install postgres
+brew install postgresql
+
 // rbenv for ruby versioning
 // you can follow this instruction to install rbenv
 https://github.com/rbenv/rbenv?tab=readme-ov-file#installation
