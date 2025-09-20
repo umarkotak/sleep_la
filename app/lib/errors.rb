@@ -1,4 +1,8 @@
 module Errors
+  class Base < StandardError
+    attr_reader :http_status
+  end
+
   class Unauthorized < Base
     def initialize(msg = "unauthorized")
       @http_status = 401
