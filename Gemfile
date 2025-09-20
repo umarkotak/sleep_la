@@ -11,7 +11,7 @@ gem "bootsnap", require: false
 gem "kamal", require: false
 gem "thruster", require: false
 gem "dotenv"
-
+gem "jwt"
 gem "sorbet", group: :development
 gem "sorbet-runtime"
 
